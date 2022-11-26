@@ -96,3 +96,21 @@ resim call-method $component_address view_amount_deposited 1,$user_2_nft_resourc
 echo ""
 echo -e "\e[7m Viewing Voting Power"
 resim call-method $component_address view_voting_power 1,$user_2_nft_resource_address
+
+echo ""
+echo -e "\e[7m Calling Method: { make_poll } to buy Red Gumball"
+resim call-method $component_address make_poll "Buy a Red Gumball" "I vote that we buy a Red Gumball"
+
+echo ""
+echo -e "\e[7m Checking to see if Panic! with Duplicate Poll entry on title 'Buy a Red Gumball'"
+resim call-method $component_address make_poll "Buy a Red Gumball" "I vote that we buy a Red Gumball"
+
+
+echo ""
+echo -e "\e[7m Calling Method: { make_poll } to buy Blue Gumball"
+resim call-method $component_address make_poll "Buy a Blue Gumball" "I vote that we buy a Blue Gumball"
+
+
+echo ""
+echo -e "\e[7m Calling Method: { view_polls }"
+resim call-method $component_address view_polls

@@ -22,7 +22,8 @@ blueprint! {
         user_manager_badge: Vault,
         // total wallet vault
         xrd_vault: Vault,
-        user_resource_address: ResourceAddress
+        user_resource_address: ResourceAddress,
+        polls: HashMap<String, (String, Decimal)>
     }
 
     impl VotingMachine {
@@ -44,7 +45,8 @@ blueprint! {
             Self {
                 xrd_vault: Vault::new(RADIX_TOKEN),
                 user_manager_badge: Vault::with_bucket(user_manager_badge),
-                user_resource_address:user_badge
+                user_resource_address:user_badge,
+                polls: HashMap::new()
             }
             .instantiate()
             .globalize()
@@ -106,6 +108,17 @@ blueprint! {
             info!("Total voting power is: {:?}%", voting_power);
 
             user_proof
+        }
+
+        pub fn make_poll(&mut self, title: String, description: String) {
+            // let title_clone = title.clone();
+            assert!(!self.polls.contains_key(&title), "Poll with this title already exits!");
+            self.polls.insert(title, (description, Decimal::zero()));
+            // info!("{:?}", self.polls.contains_key(&title_clone));
+        }
+
+        pub fn view_polls(&self) {
+            info!("Current Open Polls: {:?}", self.polls);
         }
     }
 }
